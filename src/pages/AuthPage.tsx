@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../lib/useAuth";
 import Logo from "../components/Logo";
-import { Eye, EyeOff, ArrowLeft, CircleAlert as AlertCircle } from "lucide-react";
+import { INDUSTRIES } from "../lib/industries";
+import { Eye, EyeOff, ArrowLeft, CircleAlert as AlertCircle, Check } from "lucide-react";
 
 export default function AuthPage() {
   const { signIn, signUp, user } = useAuth();
@@ -11,6 +12,7 @@ export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedIndustry, setSelectedIndustry] = useState("dental");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -23,13 +25,16 @@ export default function AuthPage() {
     setError(null);
     setLoading(true);
 
+    if (mode === "signup") {
+      localStorage.setItem("signup_industry", selectedIndustry);
+    }
+
     const result = mode === "signin" ? await signIn(email, password) : await signUp(email, password);
 
     if (result.error) {
       setError(result.error);
       setLoading(false);
     }
-    // On success, the auth state change will trigger the useEffect redirect
   };
 
   return (
@@ -57,11 +62,38 @@ export default function AuthPage() {
             </h1>
             <p className="mt-2 text-sm text-neutral-600">
               {mode === "signup"
-                ? "Get a free AI visibility check for your dental practice."
+                ? "Get a free AI visibility check for your business."
                 : "Sign in to view your AI visibility dashboard."}
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              {/* Industry selector - only on signup */}
+              {mode === "signup" && (
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-neutral-700">
+                    What type of business do you have?
+                  </label>
+                  <div className="grid max-h-48 grid-cols-2 gap-2 overflow-y-auto rounded-xl border border-neutral-200 p-2">
+                    {INDUSTRIES.map((ind) => (
+                      <button
+                        key={ind.id}
+                        type="button"
+                        onClick={() => setSelectedIndustry(ind.id)}
+                        className={`flex items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
+                          selectedIndustry === ind.id
+                            ? "bg-brand-600 text-white"
+                            : "bg-neutral-50 text-neutral-600 hover:bg-neutral-100"
+                        }`}
+                      >
+                        <span className="text-base">{ind.emoji}</span>
+                        <span className="flex-1 truncate">{ind.label}</span>
+                        {selectedIndustry === ind.id && <Check className="h-4 w-4 flex-shrink-0" />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-neutral-700">
                   Email address
@@ -71,7 +103,7 @@ export default function AuthPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@yourdental.com"
+                  placeholder="you@yourcompany.com"
                   className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
                 />
               </div>

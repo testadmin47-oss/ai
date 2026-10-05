@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabase";
 import type { Client, TrackedQuery, Competitor, MonthlySnapshot, VisibilityCheck } from "../lib/types";
 import ScoreRing from "../components/ScoreRing";
 import Logo from "../components/Logo";
+import { INDUSTRY_MAP, DEFAULT_INDUSTRY } from "../lib/industries";
 import { Eye, TrendingUp, TrendingDown, ChartBar as BarChart3, Target, MessageSquare, ArrowUpRight, LogOut, Download, ChevronRight, FileText, Sparkles } from "lucide-react";
 
 const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI"] as const;
@@ -80,7 +81,7 @@ export default function DashboardPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-neutral-50">
         <div className="text-center">
-          <p className="text-neutral-600">No practice data found.</p>
+          <p className="text-neutral-600">No business data found.</p>
           <Link to="/" className="mt-4 inline-block text-brand-600 hover:underline">Return home</Link>
         </div>
       </div>
@@ -114,6 +115,8 @@ export default function DashboardPage() {
   // Sorted competitors (client included)
   const sortedComps = [...competitors].sort((a, b) => b.overall_score - a.overall_score);
   const clientRank = sortedComps.findIndex((c) => c.is_client) + 1;
+
+  const industry = client.industry ? (INDUSTRY_MAP[client.industry] ?? DEFAULT_INDUSTRY) : DEFAULT_INDUSTRY;
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -334,7 +337,7 @@ export default function DashboardPage() {
               <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h2 className="text-lg font-bold text-neutral-900">Tracked Queries</h2>
-                  <p className="text-sm text-neutral-500">{queries.length} patient queries monitored across 4 AI platforms</p>
+                  <p className="text-sm text-neutral-500">{queries.length} customer queries monitored across 4 AI platforms</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
@@ -544,7 +547,7 @@ export default function DashboardPage() {
                   <table className="w-full">
                     <thead className="bg-neutral-50">
                       <tr className="text-left text-xs font-semibold uppercase tracking-wider text-neutral-500">
-                        <th className="px-4 py-3">Practice</th>
+                        <th className="px-4 py-3">Business</th>
                         <th className="px-4 py-3 text-right">Score</th>
                         <th className="px-4 py-3 text-right">Mention Rate</th>
                         <th className="hidden px-4 py-3 text-right sm:table-cell">vs. You</th>
@@ -578,8 +581,7 @@ export default function DashboardPage() {
                   <div>
                     <h3 className="text-sm font-bold text-neutral-900">Biggest Improvement This Month</h3>
                     <p className="mt-1 text-sm text-neutral-700">
-                      Your visibility score increased from {prevSnapshot?.visibility_score ?? 0}% to {latestSnapshot?.visibility_score ?? client.overall_score}%.
-                      Implant-related queries showed the most growth — from 5 mentions last month to 17 this month.
+                      Your visibility score increased from {prevSnapshot?.visibility_score ?? 0}% to {latestSnapshot?.visibility_score ?? client.overall_score}%. {industry.reportHighlight}
                     </p>
                   </div>
                 </div>
@@ -589,13 +591,7 @@ export default function DashboardPage() {
               <div className="mt-6 rounded-xl border border-neutral-200 bg-white p-5">
                 <h3 className="text-sm font-bold text-neutral-900">Next Month's Work</h3>
                 <ul className="mt-3 space-y-2">
-                  {[
-                    "Improve implant service page content with patient-focused FAQs",
-                    "Strengthen local authority through 2 relevant publication opportunities",
-                    "Fix 3 directory listing inconsistencies (NAP mismatch on Yelp, Healthgrades)",
-                    "Add structured data to doctor/team pages",
-                    "Improve emergency dentistry content for after-hours queries",
-                  ].map((task, i) => (
+                  {industry.nextSteps.map((task, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-neutral-700">
                       <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
                       {task}

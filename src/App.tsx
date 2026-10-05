@@ -24,7 +24,9 @@ function DemoSeeder({ children }: { children: React.ReactNode }) {
     }
     (async () => {
       try {
-        await seedDemoData(user.id);
+        const storedIndustry = localStorage.getItem("signup_industry") || "dental";
+        await seedDemoData(user.id, storedIndustry);
+        localStorage.removeItem("signup_industry");
       } catch {
         // ignore — data may already exist
       }

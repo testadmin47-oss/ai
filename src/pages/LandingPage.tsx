@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Search, Eye, TrendingUp, ShieldCheck, ChartBar as BarChart3, Target, ArrowRight, Check, Menu, X, Bot, MessageSquare, Activity, Sparkles, ChevronDown } from "lucide-react";
 import Logo from "../components/Logo";
 import ScoreRing from "../components/ScoreRing";
+import { INDUSTRIES } from "../lib/industries";
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +17,7 @@ export default function LandingPage() {
           <Logo />
           <div className="hidden items-center gap-8 md:flex">
             <a href="#how-it-works" className="text-sm font-medium text-neutral-600 transition hover:text-brand-600">How It Works</a>
+            <a href="#industries" className="text-sm font-medium text-neutral-600 transition hover:text-brand-600">Industries</a>
             <a href="#pricing" className="text-sm font-medium text-neutral-600 transition hover:text-brand-600">Pricing</a>
             <a href="#faq" className="text-sm font-medium text-neutral-600 transition hover:text-brand-600">FAQ</a>
             <Link
@@ -36,6 +38,7 @@ export default function LandingPage() {
           <div className="border-t border-neutral-200 bg-white px-6 py-4 md:hidden">
             <div className="flex flex-col gap-4">
               <a href="#how-it-works" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-600">How It Works</a>
+              <a href="#industries" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-600">Industries</a>
               <a href="#pricing" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-600">Pricing</a>
               <a href="#faq" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-neutral-600">FAQ</a>
               <Link to="/auth" className="rounded-lg bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white">Sign In</Link>
@@ -55,16 +58,17 @@ export default function LandingPage() {
             <div className="animate-fade-in-up">
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-2 text-sm font-medium text-brand-700">
                 <Sparkles className="h-4 w-4" />
-                AI Search Visibility for Dental Practices
+                AI Search Visibility for Any Business
               </div>
               <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight text-neutral-900 md:text-6xl">
-                When patients ask AI for a dentist,{" "}
+                When customers ask AI for a recommendation,{" "}
                 <span className="gradient-text">are they mentioning you?</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
                 We measure how often ChatGPT, Perplexity, Gemini, and Google AI
-                recommend your practice — then improve the real-world signals that
-                drive those mentions.
+                recommend your business — then improve the real-world signals that
+                drive those mentions. Works for dental clinics, law firms, HVAC
+                companies, hotels, SaaS products, and 12+ more industries.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -149,14 +153,54 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ===== Industries Grid ===== */}
+      <section id="industries" className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm font-medium text-neutral-600">
+              <Target className="h-4 w-4" /> One Platform, Every Industry
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
+              We serve the businesses people ask AI about
+            </h2>
+            <p className="mt-4 text-lg text-neutral-600">
+              The core service stays the same — measure, improve, and monitor your
+              AI visibility. We customize the query sets and signals for each industry.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {INDUSTRIES.map((ind) => (
+              <Link
+                key={ind.id}
+                to="/auth"
+                className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-white p-4 transition hover:border-brand-300 hover:shadow-lg"
+              >
+                <span className="text-3xl">{ind.emoji}</span>
+                <div className="flex-1">
+                  <div className="font-semibold text-neutral-900 group-hover:text-brand-600">{ind.label}</div>
+                  <div className="text-xs text-neutral-500">{ind.queries.length} tracked queries</div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-neutral-300 transition group-hover:text-brand-500" />
+              </Link>
+            ))}
+          </div>
+
+          <p className="mt-8 text-center text-sm text-neutral-500">
+            Don't see your industry? The platform works for any business that customers search for.{" "}
+            <Link to="/auth" className="font-semibold text-brand-600 hover:underline">Get started anyway →</Link>
+          </p>
+        </div>
+      </section>
+
       {/* ===== Stats bar ===== */}
       <section className="border-y border-neutral-200 bg-white">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-neutral-200 px-6 md:grid-cols-4">
           {[
             { value: "1.2B+", label: "AI searches per month" },
-            { value: "73%", label: "of patients use AI before booking" },
+            { value: "73%", label: "of consumers use AI before buying" },
             { value: "4", label: "AI platforms we monitor" },
-            { value: "30+", label: "queries tracked per practice" },
+            { value: "16+", label: "industries supported" },
           ].map((s) => (
             <div key={s.label} className="px-6 py-8 text-center">
               <div className="text-3xl font-bold text-brand-600">{s.value}</div>
@@ -171,12 +215,12 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
-              Patients aren't searching Google anymore
+              Customers aren't just searching Google anymore
             </h2>
             <p className="mt-4 text-lg text-neutral-600">
-              They're asking ChatGPT, Perplexity, and Gemini for recommendations.
-              If your practice isn't mentioned in the answer, you don't exist —
-              no matter how good your SEO used to be.
+              They're asking ChatGPT, Perplexity, and Gemini for recommendations —
+              for a dentist, a lawyer, an HVAC company, a hotel, a software tool.
+              If your business isn't mentioned in the answer, you don't exist.
             </p>
           </div>
 
@@ -187,7 +231,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold text-neutral-900">The old way</h3>
               <ul className="mt-4 space-y-3 text-neutral-600">
-                {["Optimize for Google search rankings", "Hope patients find your website", "Compete on keywords, not mentions", "No idea what AI systems say about you"].map((item) => (
+                {["Optimize for Google search rankings", "Hope customers find your website", "Compete on keywords, not mentions", "No idea what AI systems say about you"].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <X className="mt-0.5 h-5 w-5 flex-shrink-0 text-rose-500" />
                     <span>{item}</span>
@@ -202,7 +246,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold text-neutral-900">The Sighten way</h3>
               <ul className="mt-4 space-y-3 text-neutral-600">
-                {["Measure how often AI recommends your practice", "See exactly where competitors win", "Strengthen real signals AI systems trust", "Track visibility month over month"].map((item) => (
+                {["Measure how often AI recommends your business", "See exactly where competitors win", "Strengthen real signals AI systems trust", "Track visibility month over month"].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" />
                     <span>{item}</span>
@@ -225,13 +269,14 @@ export default function LandingPage() {
               Find, Audit, Improve, Monitor
             </h2>
             <p className="mt-4 text-lg text-neutral-600">
-              A clear five-step process that turns AI invisibility into measurable growth.
+              A clear five-step process that turns AI invisibility into measurable growth —
+              whether you run a dental clinic, a law firm, or a SaaS company.
             </p>
           </div>
 
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             {[
-              { icon: Search, title: "Test Visibility", desc: "We run 30+ patient queries across ChatGPT, Perplexity, Gemini, and Google AI to see if your practice appears.", color: "brand" },
+              { icon: Search, title: "Test Visibility", desc: "We run 30+ customer queries across ChatGPT, Perplexity, Gemini, and Google AI to see if your business appears.", color: "brand" },
               { icon: BarChart3, title: "Audit & Analyze", desc: "Deep audit comparing your visibility against top competitors, with gap analysis by query category.", color: "brand" },
               { icon: Target, title: "Improve Signals", desc: "Strengthen your website, business listings, reviews, and third-party presence — the real data AI systems use.", color: "accent" },
               { icon: TrendingUp, title: "Monitor Monthly", desc: "Every month we re-test all queries and track your visibility trend alongside competitors.", color: "accent" },
@@ -269,7 +314,7 @@ export default function LandingPage() {
             </h2>
             <p className="mt-4 text-lg text-neutral-400">
               A live dashboard tracking your AI visibility score, platform breakdown,
-              competitor comparison, and monthly trend.
+              competitor comparison, and monthly trend — customized for your industry.
             </p>
           </div>
 
@@ -379,9 +424,9 @@ export default function LandingPage() {
                 <span className="text-4xl font-bold text-neutral-900">$300</span>
                 <span className="text-neutral-500"> – $750</span>
               </div>
-              <p className="mt-1 text-sm text-neutral-500">depending on practice size</p>
+              <p className="mt-1 text-sm text-neutral-500">depending on business size</p>
               <ul className="mt-6 space-y-3 text-sm text-neutral-600">
-                {["50–100 patient queries tested", "All 4 AI platforms covered", "Competitor visibility analysis", "Citation and source audit", "Detailed findings report", "Improvement recommendations"].map((f) => (
+                {["50–100 customer queries tested", "All 4 AI platforms covered", "Competitor visibility analysis", "Citation and source audit", "Detailed findings report", "Improvement recommendations"].map((f) => (
                   <li key={f} className="flex items-start gap-3">
                     <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" />
                     {f}
@@ -427,12 +472,12 @@ export default function LandingPage() {
             {/* Growth */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-8">
               <h3 className="text-lg font-bold text-neutral-900">Growth</h3>
-              <p className="mt-1 text-sm text-neutral-500">For multi-location practices</p>
+              <p className="mt-1 text-sm text-neutral-500">For multi-location or larger businesses</p>
               <div className="mt-6">
                 <span className="text-4xl font-bold text-neutral-900">$1,000</span>
                 <span className="text-neutral-500"> – $2,000+/mo</span>
               </div>
-              <p className="mt-1 text-sm text-neutral-500">per practice</p>
+              <p className="mt-1 text-sm text-neutral-500">per business</p>
               <ul className="mt-6 space-y-3 text-sm text-neutral-600">
                 {["Larger query set (100+ queries)", "Multiple locations tracked", "More competitors monitored", "Content creation included", "Reputation management", "Third-party authority building", "Deeper reporting & strategy"].map((f) => (
                   <li key={f} className="flex items-start gap-3">
@@ -452,9 +497,10 @@ export default function LandingPage() {
 
           <div className="mt-10 rounded-xl border border-amber-200 bg-amber-50/50 p-6 text-center">
             <p className="text-sm text-neutral-700">
-              <strong>Why it pays for itself:</strong> A single new implant patient
-              can be worth $2,000+. If improved AI visibility brings in even one
-              additional patient, your plan is covered.
+              <strong>Why it pays for itself:</strong> A single new high-value customer
+              — whether a dental implant patient, a personal injury client, or an
+              HVAC installation — can be worth thousands. If improved AI visibility
+              brings in even one, your plan is covered.
             </p>
           </div>
         </div>
@@ -476,15 +522,15 @@ export default function LandingPage() {
             {[
               {
                 q: "Is this just another SEO service?",
-                a: "No. Traditional SEO optimizes for Google's search results. We measure and improve how often your practice appears in AI-generated answers from ChatGPT, Perplexity, Gemini, and Google AI — a completely different landscape with different signals.",
+                a: "No. Traditional SEO optimizes for Google's search results. We measure and improve how often your business appears in AI-generated answers from ChatGPT, Perplexity, Gemini, and Google AI — a completely different landscape with different signals.",
               },
               {
                 q: "Do you guarantee AI rankings?",
                 a: "No, and you should be skeptical of anyone who does. AI systems don't have \"rankings\" the way Google does. We measure your visibility, identify gaps, and strengthen the real-world information AI systems rely on — then track the results over time.",
               },
               {
-                q: "How is this different from what an SEO agency does?",
-                a: "SEO agencies focus on Google search rankings. We focus on AI-generated answers. The signals are different: AI systems weight third-party coverage, review quality, structured data, and content clarity differently than Google's algorithm. We specialize in that difference.",
+                q: "Which industries do you support?",
+                a: "We currently support 16+ industries including dental clinics, law firms, medical clinics, med spas, HVAC companies, plumbers, roofers, hotels, restaurants, real estate, SaaS, e-commerce, B2B, education, and automotive. The core service is the same for all — we customize the query sets, competitor tracking, and improvement strategies for each industry.",
               },
               {
                 q: "How long until I see results?",
@@ -496,7 +542,7 @@ export default function LandingPage() {
               },
               {
                 q: "Which AI platforms do you monitor?",
-                a: "We currently track ChatGPT, Perplexity, Gemini, and Google AI Overviews — the four systems patients use most. As new platforms emerge, we add them to your monitoring automatically.",
+                a: "We currently track ChatGPT, Perplexity, Gemini, and Google AI Overviews — the four systems consumers use most. As new platforms emerge, we add them to your monitoring automatically.",
               },
             ].map((item, i) => (
               <div
@@ -537,11 +583,11 @@ export default function LandingPage() {
         </div>
         <div className="relative mx-auto max-w-3xl px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">
-            Find out if AI mentions your practice
+            Find out if AI mentions your business
           </h2>
           <p className="mt-4 text-lg text-brand-100">
             Sign up for a free account and we'll run an initial visibility check
-            across 30 patient queries on four AI platforms.
+            across 30 customer queries on four AI platforms — customized for your industry.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
@@ -569,6 +615,7 @@ export default function LandingPage() {
               <Logo light />
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-neutral-400">
+              <a href="#industries" className="transition hover:text-white">Industries</a>
               <a href="#how-it-works" className="transition hover:text-white">How It Works</a>
               <a href="#pricing" className="transition hover:text-white">Pricing</a>
               <a href="#faq" className="transition hover:text-white">FAQ</a>
@@ -576,7 +623,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-8 border-t border-neutral-800 pt-8 text-center text-sm text-neutral-500">
-            <p>Sighten — AI Search Visibility for Dental Practices. We measure, improve, and monitor your visibility in AI-generated answers. No manipulation. No fake reviews. Just real data and real results.</p>
+            <p>Sighten — AI Search Visibility for Any Business. We measure, improve, and monitor your visibility in AI-generated answers. No manipulation. No fake reviews. Just real data and real results.</p>
             <p className="mt-2">© 2026 Sighten. All rights reserved.</p>
           </div>
         </div>

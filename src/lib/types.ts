@@ -4,6 +4,7 @@ export interface Client {
   id: string;
   user_id: string;
   practice_name: string;
+  industry: string;
   city: string;
   state: string;
   website: string | null;
