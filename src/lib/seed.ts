@@ -2,7 +2,7 @@ import { supabase } from "./supabase";
 import type { Client, TrackedQuery, MonthlySnapshot } from "./types";
 import { INDUSTRY_MAP, type IndustryConfig } from "./industries";
 
-const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI"];
+const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI", "Claude", "DeepSeek"];
 
 export async function seedDemoData(
   userId: string,

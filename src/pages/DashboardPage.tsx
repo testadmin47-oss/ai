@@ -8,12 +8,14 @@ import Logo from "../components/Logo";
 import { INDUSTRY_MAP, DEFAULT_INDUSTRY } from "../lib/industries";
 import { Eye, TrendingUp, TrendingDown, ChartBar as BarChart3, Target, MessageSquare, ArrowUpRight, LogOut, Download, ChevronRight, FileText, Sparkles } from "lucide-react";
 
-const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI"] as const;
+const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI", "Claude", "DeepSeek"] as const;
 const PLATFORM_COLORS: Record<string, string> = {
   "ChatGPT": "bg-brand-500",
   "Perplexity": "bg-accent-500",
   "Gemini": "bg-amber-500",
   "Google AI": "bg-rose-500",
+  "Claude": "bg-orange-500",
+  "DeepSeek": "bg-violet-500",
 };
 
 export default function DashboardPage() {
@@ -337,7 +339,7 @@ export default function DashboardPage() {
               <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h2 className="text-lg font-bold text-neutral-900">Tracked Queries</h2>
-                  <p className="text-sm text-neutral-500">{queries.length} customer queries monitored across 4 AI platforms</p>
+                  <p className="text-sm text-neutral-500">{queries.length} customer queries monitored across {PLATFORMS.length} AI platforms</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
