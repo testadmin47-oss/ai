@@ -5,20 +5,7 @@ import { supabase } from "../lib/supabase";
 import type { Client, TrackedQuery, Competitor, MonthlySnapshot, VisibilityCheck } from "../lib/types";
 import ScoreRing from "../components/ScoreRing";
 import Logo from "../components/Logo";
-import {
-  Eye,
-  TrendingUp,
-  TrendingDown,
-  BarChart3,
-  Target,
-  MessageSquare,
-  ArrowUpRight,
-  LogOut,
-  Download,
-  ChevronRight,
-  FileText,
-  Sparkles,
-} from "lucide-react";
+import { Eye, TrendingUp, TrendingDown, ChartBar as BarChart3, Target, MessageSquare, ArrowUpRight, LogOut, Download, ChevronRight, FileText, Sparkles } from "lucide-react";
 
 const PLATFORMS = ["ChatGPT", "Perplexity", "Gemini", "Google AI"] as const;
 const PLATFORM_COLORS: Record<string, string> = {

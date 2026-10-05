@@ -1,22 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {
-  Search,
-  Eye,
-  TrendingUp,
-  ShieldCheck,
-  BarChart3,
-  Target,
-  ArrowRight,
-  Check,
-  Menu,
-  X,
-  Bot,
-  MessageSquare,
-  Activity,
-  Sparkles,
-  ChevronDown,
-} from "lucide-react";
+import { Search, Eye, TrendingUp, ShieldCheck, ChartBar as BarChart3, Target, ArrowRight, Check, Menu, X, Bot, MessageSquare, Activity, Sparkles, ChevronDown } from "lucide-react";
 import Logo from "../components/Logo";
 import ScoreRing from "../components/ScoreRing";
 

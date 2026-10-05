@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../lib/useAuth";
 import Logo from "../components/Logo";
-import { Eye, EyeOff, ArrowLeft, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, CircleAlert as AlertCircle } from "lucide-react";
 
 export default function AuthPage() {
   const { signIn, signUp, user } = useAuth();
