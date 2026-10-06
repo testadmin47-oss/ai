@@ -1,40 +1,24 @@
 import { Link } from "react-router-dom";
-import { useState, type ComponentType } from "react";
+import { useState } from "react";
 import {
   Activity,
   ArrowRight,
-  ArrowUpRight,
   BarChart3,
   Bot,
-  Building2,
-  Car,
   Check,
   ChevronDown,
-  Cpu,
   Globe2,
-  GraduationCap,
-  Home,
-  Hotel,
   Menu,
   MessageSquare,
-  Scale,
   Search,
   ShieldCheck,
-  ShoppingBag,
   Sparkles,
-  Stethoscope,
   Target,
   TrendingUp,
-  UtensilsCrossed,
-  Wrench,
   X,
-  Zap,
-  Briefcase,
 } from "lucide-react";
 import Logo from "../components/Logo";
 import ScoreRing from "../components/ScoreRing";
-import { INDUSTRIES } from "../lib/industries";
-
 const PLATFORMS = [
   { name: "ChatGPT", score: 42, color: "bg-brand-500" },
   { name: "Perplexity", score: 38, color: "bg-accent-500" },
@@ -44,23 +28,6 @@ const PLATFORMS = [
   { name: "DeepSeek", score: 29, color: "bg-violet-500" },
 ];
 
-const INDUSTRY_ICONS: Record<string, ComponentType<{ className?: string }>> = {
-  dental: Stethoscope,
-  legal: Scale,
-  medical: Stethoscope,
-  medspa: Sparkles,
-  hvac: Zap,
-  plumbing: Wrench,
-  roofing: Home,
-  hotels: Hotel,
-  restaurants: UtensilsCrossed,
-  realestate: Building2,
-  saas: Cpu,
-  ecommerce: ShoppingBag,
-  b2b: Briefcase,
-  education: GraduationCap,
-  automotive: Car,
-};
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -203,12 +170,27 @@ export default function LandingPage() {
 
       <section id="industries" className="bg-white py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <div className="max-w-2xl"><div className="mb-4 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm font-medium text-neutral-600"><Globe2 className="h-4 w-4" /> Industry coverage</div><h2 className="text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">One methodology. Every industry.</h2><p className="mt-4 text-lg text-neutral-600">The core service stays the same. We tailor query sets, competitor benchmarks, and recommendations to how your customers search.</p></div>
-            <Link to="/auth" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700">Explore your industry <ArrowRight className="h-4 w-4" /></Link>
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-2 text-sm font-medium text-brand-700"><Globe2 className="h-4 w-4" /> What drives visibility</div>
+            <h2 className="text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">Become the business AI can confidently recommend.</h2>
+            <p className="mt-4 text-lg leading-8 text-neutral-600">AI recommendations are built from many real-world signals. Sighten shows you which ones are helping, which ones are missing, and what to improve next.</p>
           </div>
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {INDUSTRIES.map((industry) => { const Icon = INDUSTRY_ICONS[industry.id] ?? Building2; return <Link key={industry.id} to="/auth" className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/50 p-4 transition hover:border-brand-300 hover:bg-brand-50/50"><div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm"><Icon className="h-5 w-5 text-brand-600" /></div><div className="flex-1"><p className="text-sm font-semibold text-neutral-900">{industry.label}</p><p className="mt-0.5 text-xs text-neutral-500">{industry.queries.length} query templates</p></div><ArrowUpRight className="h-4 w-4 text-neutral-300 transition group-hover:text-brand-500" /></Link>; })}
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {[
+              { icon: Search, title: "Customer language", text: "Understand the exact questions your customers ask and whether your business appears in the answers." },
+              { icon: ShieldCheck, title: "Trusted business data", text: "Strengthen the website, listings, reviews, and third-party sources AI systems use to verify your business." },
+              { icon: BarChart3, title: "Competitive position", text: "See where competitors are being recommended more often and turn those gaps into an action plan." },
+            ].map((card) => (
+              <div key={card.title} className="rounded-2xl border border-neutral-200 bg-neutral-50/60 p-7 transition hover:-translate-y-1 hover:border-brand-300 hover:bg-brand-50/40 hover:shadow-lg">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-sm"><card.icon className="h-6 w-6 text-brand-600" /></div>
+                <h3 className="text-lg font-bold text-neutral-950">{card.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">{card.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-col items-center justify-between gap-5 rounded-2xl border border-brand-100 bg-brand-50/60 px-7 py-6 md:flex-row">
+            <div><p className="font-semibold text-neutral-950">Your industry is already supported.</p><p className="mt-1 text-sm text-neutral-600">From dental clinics and law firms to SaaS companies and hotels, every account gets industry-specific queries.</p></div>
+            <Link to="/auth" className="inline-flex flex-shrink-0 items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Check your visibility <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </section>
