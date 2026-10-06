@@ -5,7 +5,6 @@ export interface Client {
   user_id: string;
   practice_name: string;
   industry: string;
-  industry: string;
   city: string;
   state: string;
   website: string | null;
